@@ -11,8 +11,6 @@ export default function ArticleList() {
   const [isLoading, setIsLoading] = useState(true);
   const { topic_slug } = useParams();
 
-  console.log(topic_slug);
-
   useEffect(() => {
     let request = `https://northcoders-api-news.herokuapp.com/api/articles`;
 
