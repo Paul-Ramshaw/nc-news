@@ -22,6 +22,7 @@ function App() {
           <div className="container">
             <Routes>
               <Route path="/" element={<ArticleList />} />
+              <Route path="/topics/:topic_slug" element={<ArticleList />} />
             </Routes>
           </div>
         </div>
