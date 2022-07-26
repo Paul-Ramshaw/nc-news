@@ -2,10 +2,16 @@
   text-align: center;
 }
 
+.container-main {
+  max-width: 750px;
+  margin: auto;
+}
+
 .header-container {
   display: flex;
   background-color: #172a3a;
   align-items: flex-start;
+  padding-left: 20px;
 }
 
 .header-text {
@@ -27,6 +33,7 @@
 
 .vote {
   width: 10%;
+  margin-right: 10px;
 }
 
 .article-details {
@@ -51,4 +58,23 @@ button {
 select {
   padding: 3px;
   padding-right: 10px;
+}
+
+.article-body {
+  text-align: left;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+.article-sub-details {
+  display: flex;
+  padding-left: 15px;
+  color: #74b3ce;
+}
+
+.article-details-author {
+  display: flex;
+  font-size: 0.8rem;
 }

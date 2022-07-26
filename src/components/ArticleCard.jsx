@@ -1,6 +1,7 @@
 import { Card, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComment, faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 export default function ArticleCard({ article }) {
   return (
@@ -19,7 +20,9 @@ export default function ArticleCard({ article }) {
             <FontAwesomeIcon className="icon" icon={faComment} />{' '}
             {article.comment_count} comments
           </Button>
-          <Button variant="light">Read article</Button>
+          <Link to={`/articles/${article.article_id}`}>
+            <Button variant="light">Read article</Button>
+          </Link>
         </div>
       </Card.Body>
     </Card>
