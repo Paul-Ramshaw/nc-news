@@ -40,3 +40,15 @@
 button {
   margin: 5px;
 }
+
+.filter-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+select {
+  padding: 3px;
+  padding-right: 10px;
+}
