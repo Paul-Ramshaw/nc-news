@@ -1,3 +1,42 @@
 .App {
   text-align: center;
 }
+
+.header-container {
+  display: flex;
+  background-color: #172a3a;
+  align-items: flex-start;
+}
+
+.header-text {
+  font-size: 1.6rem;
+  color: white;
+  padding: 10px;
+}
+
+.article-card {
+  display: flex;
+  min-height: 25vh;
+  margin-top: 1vh;
+  margin-bottom: 2vh;
+}
+
+.card-body {
+  display: flex;
+}
+
+.vote {
+  width: 10%;
+}
+
+.article-details {
+  margin: auto;
+}
+
+.topic-tag {
+  color: #74b3ce;
+}
+
+button {
+  margin: 5px;
+}
