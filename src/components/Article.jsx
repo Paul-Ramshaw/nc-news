@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { Card, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComment, faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import formatDate from '../utils/formatDate';
 
 export default function Article() {
   const { article_id } = useParams();
@@ -19,13 +20,8 @@ export default function Article() {
         `https://northcoders-api-news.herokuapp.com/api/articles/${article_id}`
       )
       .then(({ data: { article } }) => {
-        const created = article.created_at
-          .slice(0, 10)
-          .split('-')
-          .reverse()
-          .join('-');
-
-        setCreatedAt(created);
+        const dateCreated = formatDate(article.created_at);
+        setCreatedAt(dateCreated);
         setArticle(article);
         setIsLoading(false);
       })
