@@ -1,16 +1,14 @@
 import { Card, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faComment, faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import { faComment } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import UpVote from './UpVote';
 
 export default function ArticleCard({ article }) {
   return (
     <Card className="article-card">
       <Card.Body>
-        <div className="vote">
-          <FontAwesomeIcon className="icon" icon={faArrowUp} />
-          <p>{article.votes}</p>
-        </div>
+        <UpVote article={article} />
         <div className="article-details">
           <Card.Title>{article.title}</Card.Title>
           <Card.Subtitle className="topic-tag">{article.topic}</Card.Subtitle>
