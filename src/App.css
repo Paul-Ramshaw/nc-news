@@ -20,11 +20,28 @@
   padding: 10px;
 }
 
+.alert-container {
+  background-color: #74b3ce;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.alert-text {
+  padding: 5px;
+  color: white;
+}
+
 .article-card {
   display: flex;
   min-height: 25vh;
   margin-top: 1vh;
   margin-bottom: 2vh;
+}
+
+.article-title {
+  display: flex;
+  text-align: left;
 }
 
 .card-body {
@@ -77,4 +94,12 @@ a {
 .article-details-author {
   display: flex;
   font-size: 0.8rem;
+}
+
+.upVoteArrow {
+  cursor: pointer;
+}
+
+.green-arrow {
+  color: rgb(123, 200, 138);
 }

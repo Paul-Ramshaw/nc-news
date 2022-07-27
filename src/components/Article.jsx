@@ -4,8 +4,9 @@ import ErrorContext from '../contexts/ErrorContext';
 import { useParams } from 'react-router-dom';
 import { Card, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faComment, faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import { faComment } from '@fortawesome/free-solid-svg-icons';
 import formatDate from '../utils/formatDate';
+import UpVote from './UpVote';
 
 export default function Article() {
   const { article_id } = useParams();
@@ -37,13 +38,10 @@ export default function Article() {
   return (
     <Card className="article-card">
       <Card.Body>
-        <div className="vote">
-          <FontAwesomeIcon className="icon" icon={faArrowUp} />
-          <p>{article.votes}</p>
-        </div>
+        <UpVote article={article} />
         <div className="article-details">
           <p className="article-sub-details">{article.topic}</p>
-          <Card.Title>{article.title}</Card.Title>
+          <Card.Title className="article-title">{article.title}</Card.Title>
           <p className="article-body">{article.body}</p>
           <p className="article-details-author">
             Posted by {article.author} on {createdAt}
