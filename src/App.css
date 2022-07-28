@@ -103,3 +103,28 @@ a {
 .green-arrow {
   color: rgb(123, 200, 138);
 }
+
+.avatar {
+  height: 15px;
+  margin: 7px;
+}
+
+.comment-container {
+  display: flex;
+}
+
+.comment {
+  margin: 20px;
+  border-bottom: 1px solid lightgray;
+}
+
+.comment-author {
+  display: flex;
+  font-size: 0.7rem;
+}
+
+.comment-body {
+  display: flex;
+  justify-content: flex-start;
+  text-align: left;
+}
