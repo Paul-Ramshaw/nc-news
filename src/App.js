@@ -11,7 +11,11 @@ import Error from './components/Error';
 import Alert from './components/Alert';
 
 function App() {
-  const [user, setUser] = useState({ id: 1, name: 'You', votedOn: [] });
+  const [user, setUser] = useState({
+    id: 0,
+    username: 'jessjelly',
+    votedOn: [],
+  });
   const [error, setError] = useState({ msg: '' });
   const [retry, setRetry] = useState({ msg: '', retrying: false });
 
