@@ -2,11 +2,10 @@ import { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import ErrorContext from '../contexts/ErrorContext';
 import { useParams } from 'react-router-dom';
-import { Card, Button } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faComment } from '@fortawesome/free-solid-svg-icons';
+import { Card } from 'react-bootstrap';
 import formatDate from '../utils/formatDate';
 import UpVote from './UpVote';
+import Comments from './Comments';
 
 export default function Article() {
   const { article_id } = useParams();
@@ -36,23 +35,21 @@ export default function Article() {
   }
 
   return (
-    <Card className="article-card">
-      <Card.Body>
-        <UpVote article={article} />
-        <div className="article-details">
-          <p className="article-sub-details">{article.topic}</p>
-          <Card.Title className="article-title">{article.title}</Card.Title>
-          <p className="article-body">{article.body}</p>
-          <p className="article-details-author">
-            Posted by {article.author} on {createdAt}
-          </p>
-          <Button variant="light">
-            {' '}
-            <FontAwesomeIcon className="icon" icon={faComment} />{' '}
-            {article.comment_count} comments
-          </Button>
-        </div>
-      </Card.Body>
-    </Card>
+    <div>
+      <Card className="article-card">
+        <Card.Body>
+          <UpVote article={article} />
+          <div className="article-details">
+            <p className="article-sub-details">{article.topic}</p>
+            <Card.Title className="article-title">{article.title}</Card.Title>
+            <p className="article-body">{article.body}</p>
+            <p className="article-details-author">
+              Posted by {article.author} on {createdAt}
+            </p>
+          </div>
+        </Card.Body>
+      </Card>
+      <Comments article={article} />
+    </div>
   );
 }

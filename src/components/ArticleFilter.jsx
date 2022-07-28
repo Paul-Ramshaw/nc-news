@@ -38,7 +38,7 @@ export default function ArticleFilter() {
   }
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <></>;
   }
 
   return (
