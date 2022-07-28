@@ -1,17 +1,18 @@
 import { useEffect, useContext, useState } from 'react';
 import axios from 'axios';
 import ErrorContext from '../contexts/ErrorContext';
-import { useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
 export default function ArticleFilter() {
   const { setError } = useContext(ErrorContext);
   const [topics, setTopics] = useState([]);
   const [selectedTopic, setSelectedTopic] = useState('');
+  const [selectedSort, setSelectedSort] = useState('votes');
+  const [selectedOrder, setSelectedOrder] = useState('desc');
   const { topic_slug } = useParams();
   const [isLoading, setIsLoading] = useState(true);
-
-  const navigate = useNavigate();
+  let [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     setSelectedTopic(topic_slug);
@@ -27,29 +28,46 @@ export default function ArticleFilter() {
       });
   }, []);
 
-  function handleSelectTopic(e) {
+  function handleQuerySelect(e, query) {
     e.preventDefault();
-    let url = '/topics/' + e.target.value;
-    if (e.target.value === 'all') {
-      url = '/';
-    }
-    setSelectedTopic(e.target.value);
-    navigate(url);
-  }
 
-  if (isLoading) {
-    return <></>;
+    const params = {
+      sort_by: selectedSort,
+      order_by: selectedOrder,
+    };
+
+    if (query === 'topic' && e.target.value === 'all') {
+      setSearchParams(params);
+    } else {
+      setSearchParams({
+        ...params,
+        [query]: e.target.value,
+      });
+    }
+
+    if (query === 'topic') {
+      setSelectedTopic(e.target.value);
+      return;
+    }
+    if (query === 'sort_by') {
+      setSelectedSort(e.target.value);
+      return;
+    }
+    if (query === 'order_by') {
+      setSelectedOrder(e.target.value);
+      return;
+    }
   }
 
   return (
     <div className="filter-container">
-      <div className="selector-topics">
+      <div className="selector">
         <select
           name="topics"
           id="topics"
           className="select-topics"
           value={selectedTopic}
-          onChange={(e) => handleSelectTopic(e)}
+          onChange={(e) => handleQuerySelect(e, 'topic')}
         >
           <option key="all" value="all">
             all topics
@@ -61,6 +79,38 @@ export default function ArticleFilter() {
               </option>
             );
           })}
+        </select>
+      </div>
+      <div className="selector">
+        <select
+          name="sort"
+          id="sort"
+          className="select-sort"
+          value={selectedSort}
+          onChange={(e) => handleQuerySelect(e, 'sort_by')}
+        >
+          <option key="votes" value="votes">
+            Votes
+          </option>
+          <option key="created_at" value="created_at">
+            Date
+          </option>
+        </select>
+      </div>
+      <div className="selector">
+        <select
+          name="order"
+          id="order"
+          className="select-order"
+          value={selectedOrder}
+          onChange={(e) => handleQuerySelect(e, 'order_by')}
+        >
+          <option key="desc" value="desc">
+            Desc
+          </option>
+          <option key="asc" value="asc">
+            Asc
+          </option>
         </select>
       </div>
     </div>

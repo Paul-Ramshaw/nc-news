@@ -75,6 +75,11 @@ button {
 select {
   padding: 3px;
   padding-right: 10px;
+  border-radius: 3px;
+}
+
+.selector {
+  margin-left: 3px;
 }
 
 .article-body {

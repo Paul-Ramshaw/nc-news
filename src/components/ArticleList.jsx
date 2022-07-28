@@ -2,24 +2,25 @@ import { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import ArticleCard from './ArticleCard';
 import ErrorContext from '../contexts/ErrorContext';
-import { useParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import ArticleFilter from './ArticleFilter';
 
 export default function ArticleList() {
   const { setError } = useContext(ErrorContext);
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const { topic_slug } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
+    const params = {};
+    params.sort_by = searchParams.get('sort_by') || 'votes';
+    params.order_by = searchParams.get('order_by') || 'desc';
+    params.topic = searchParams.get('topic');
+
     let request = `https://northcoders-api-news.herokuapp.com/api/articles`;
 
-    if (topic_slug) {
-      request = `https://northcoders-api-news.herokuapp.com/api/articles?topic=${topic_slug}`;
-    }
-
     axios
-      .get(request)
+      .get(request, { params: params })
       .then(({ data: { articles } }) => {
         setArticles(articles);
         setIsLoading(false);
@@ -27,7 +28,7 @@ export default function ArticleList() {
       .catch((err) => {
         setError(err.response.data);
       });
-  }, [topic_slug]);
+  }, [searchParams]);
 
   if (isLoading) {
     return <p>Loading...</p>;
