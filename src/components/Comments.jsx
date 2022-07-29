@@ -56,6 +56,7 @@ export default function Comments({ article }) {
               key={comment.comment_id}
               comment={comment}
               author={users[comment.author]}
+              setComments={setComments}
             />
           );
         })}

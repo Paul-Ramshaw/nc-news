@@ -128,3 +128,12 @@ a {
   justify-content: flex-start;
   text-align: left;
 }
+
+.button-comment-delete {
+  margin: 10px;
+}
+
+.container-comment-button {
+  display: flex;
+  justify-content: flex-end;
+}
