@@ -1,17 +1,18 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import ArticleCard from './ArticleCard';
-import ErrorContext from '../contexts/ErrorContext';
 import { useSearchParams } from 'react-router-dom';
 import ArticleFilter from './ArticleFilter';
+import Error from './Error';
 
 export default function ArticleList() {
-  const { setError } = useContext(ErrorContext);
+  const [articleListError, setArticleListError] = useState({ msg: '' });
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
+    setArticleListError({ msg: '' });
     const params = {};
     params.sort_by = searchParams.get('sort_by') || 'votes';
     params.order_by = searchParams.get('order_by') || 'desc';
@@ -31,12 +32,17 @@ export default function ArticleList() {
         setIsLoading(false);
       })
       .catch((err) => {
-        setError(err.response.data);
+        setArticleListError(err.response.data);
+        setIsLoading(false);
       });
   }, [searchParams]);
 
   if (isLoading) {
     return <p>Loading...</p>;
+  }
+
+  if (articleListError.msg) {
+    return <Error message={articleListError.msg} />;
   }
 
   return (

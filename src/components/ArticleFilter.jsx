@@ -1,10 +1,9 @@
-import { useEffect, useContext, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
-import ErrorContext from '../contexts/ErrorContext';
 import { useLocation, useSearchParams } from 'react-router-dom';
 
 export default function ArticleFilter() {
-  const { setError } = useContext(ErrorContext);
+  const [filterError, setFilterError] = useState(false);
   const [topics, setTopics] = useState([]);
   const [selection, setSelection] = useState({
     topic: 'all',
@@ -23,7 +22,7 @@ export default function ArticleFilter() {
         setIsLoading(false);
       })
       .catch((err) => {
-        setError(err.response.data);
+        setFilterError(true);
       });
   }, []);
 
@@ -50,6 +49,8 @@ export default function ArticleFilter() {
   }
 
   if (isLoading) return <></>;
+
+  if (filterError) return <></>;
 
   return (
     <div className="filter-container">

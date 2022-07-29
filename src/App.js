@@ -9,6 +9,7 @@ import ErrorContext from './contexts/ErrorContext';
 import UserContext from './contexts/UserContext';
 import Error from './components/Error';
 import Alert from './components/Alert';
+import NotFound from './components/NotFound';
 
 function App() {
   const [user, setUser] = useState({
@@ -33,8 +34,8 @@ function App() {
             <div className="container-main">
               <Routes>
                 <Route path="/" element={<ArticleList />} />
-                <Route path="/topics/:topic_slug" element={<ArticleList />} />
                 <Route path="/articles/:article_id" element={<Article />} />
+                <Route path="*" element={<NotFound />} />
               </Routes>
             </div>
           </div>
