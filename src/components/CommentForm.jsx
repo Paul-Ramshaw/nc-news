@@ -4,6 +4,7 @@ import axios from 'axios';
 import UserContext from '../contexts/UserContext';
 import ErrorContext from '../contexts/ErrorContext';
 import retryPostComment from '../api/retryPostComment';
+import sortByDate from '../utils/sortByDate';
 
 export default function CommentForm({ article_id, setComments }) {
   const [currentComment, setCurrentComment] = useState('');
@@ -19,6 +20,7 @@ export default function CommentForm({ article_id, setComments }) {
         comment_id: new Date(),
         author: user.username,
         body: currentComment,
+        justSubmitted: true,
       });
       return newComments;
     });
@@ -30,16 +32,28 @@ export default function CommentForm({ article_id, setComments }) {
 
     const url = `https://northcoders-api-news.herokuapp.com/api/articles/${article_id}/comments`;
 
-    axios.post(url, commentToPost).catch((error) => {
-      retryPostComment(url, commentToPost, 5);
-      setRetry({
-        msg: "Your comment hasn't been saved yet, but we're going to try again later.",
-        retrying: true,
+    axios
+      .post(url, commentToPost)
+      .then(() => {
+        axios
+          .get(
+            `https://northcoders-api-news.herokuapp.com/api/articles/${article_id}/comments`
+          )
+          .then(({ data: { comments } }) => {
+            const sortedComments = sortByDate(comments);
+            setComments(sortedComments);
+          });
+      })
+      .catch((error) => {
+        retryPostComment(url, commentToPost, 5);
+        setRetry({
+          msg: "Your comment hasn't been saved yet, but we're going to try again later.",
+          retrying: true,
+        });
+        setTimeout(() => {
+          setRetry({ msg: '', retrying: false });
+        }, [20000]);
       });
-      setTimeout(() => {
-        setRetry({ msg: '', retrying: false });
-      }, [20000]);
-    });
 
     setCurrentComment('');
   }
