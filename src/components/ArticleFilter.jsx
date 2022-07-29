@@ -106,10 +106,10 @@ export default function ArticleFilter() {
           onChange={(e) => handleQuerySelect(e, 'order_by')}
         >
           <option key="desc" value="desc">
-            Desc
+            {selectedSort === 'votes' ? 'High to low' : 'Most recent'}
           </option>
           <option key="asc" value="asc">
-            Asc
+            {selectedSort === 'votes' ? 'Low to high' : 'Oldest first '}
           </option>
         </select>
       </div>
