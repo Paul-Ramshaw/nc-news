@@ -43,14 +43,8 @@ export default function ArticleFilter() {
   function handleQuerySelect(e, query) {
     e.preventDefault();
 
-    const params = {
-      sort_by: selection.sort_by,
-      order_by: selection.order_by,
-      topic: selection.topic,
-    };
-
     setSearchParams({
-      ...params,
+      ...selection,
       [query]: e.target.value,
     });
   }
