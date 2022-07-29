@@ -1,21 +1,21 @@
 import { useEffect, useContext, useState } from 'react';
 import axios from 'axios';
 import ErrorContext from '../contexts/ErrorContext';
-import { useNavigate } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 
 export default function ArticleFilter() {
   const { setError } = useContext(ErrorContext);
   const [topics, setTopics] = useState([]);
-  const [selectedTopic, setSelectedTopic] = useState('');
-  const { topic_slug } = useParams();
+  const [selection, setSelection] = useState({
+    topic: 'all',
+    sort_by: 'votes',
+    order_by: 'desc',
+  });
   const [isLoading, setIsLoading] = useState(true);
-
-  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
 
   useEffect(() => {
-    setSelectedTopic(topic_slug);
-
     axios
       .get(`https://northcoders-api-news.herokuapp.com/api/topics`)
       .then(({ data: { topics } }) => {
@@ -27,32 +27,42 @@ export default function ArticleFilter() {
       });
   }, []);
 
-  function handleSelectTopic(e) {
-    e.preventDefault();
-    let url = '/topics/' + e.target.value;
-    if (e.target.value === 'all') {
-      url = '/';
+  useEffect(() => {
+    const query = {};
+    query.sort_by = searchParams.get('sort_by') || 'votes';
+    query.order_by = searchParams.get('order_by') || 'desc';
+    query.topic = searchParams.get('topic') || 'all';
+
+    if (!location.search) {
+      query.topic = 'all';
     }
-    setSelectedTopic(e.target.value);
-    navigate(url);
+
+    setSelection(query);
+  }, [searchParams]);
+
+  function handleQuerySelect(e, query) {
+    e.preventDefault();
+
+    setSearchParams({
+      ...selection,
+      [query]: e.target.value,
+    });
   }
 
-  if (isLoading) {
-    return <></>;
-  }
+  if (isLoading) return <></>;
 
   return (
     <div className="filter-container">
-      <div className="selector-topics">
+      <div className="selector">
         <select
           name="topics"
           id="topics"
           className="select-topics"
-          value={selectedTopic}
-          onChange={(e) => handleSelectTopic(e)}
+          value={selection.topic || undefined}
+          onChange={(e) => handleQuerySelect(e, 'topic')}
         >
           <option key="all" value="all">
-            all topics
+            All topics
           </option>
           {topics.map((topic) => {
             return (
@@ -61,6 +71,38 @@ export default function ArticleFilter() {
               </option>
             );
           })}
+        </select>
+      </div>
+      <div className="selector">
+        <select
+          name="sort"
+          id="sort"
+          className="select-sort"
+          value={selection.sort_by}
+          onChange={(e) => handleQuerySelect(e, 'sort_by')}
+        >
+          <option key="votes" value="votes">
+            Votes
+          </option>
+          <option key="created_at" value="created_at">
+            Date
+          </option>
+        </select>
+      </div>
+      <div className="selector">
+        <select
+          name="order"
+          id="order"
+          className="select-order"
+          value={selection.order_by}
+          onChange={(e) => handleQuerySelect(e, 'order_by')}
+        >
+          <option key="desc" value="desc">
+            {selection.sort_by === 'votes' ? 'High to low' : 'Most recent'}
+          </option>
+          <option key="asc" value="asc">
+            {selection.sort_by === 'votes' ? 'Low to high' : 'Oldest first '}
+          </option>
         </select>
       </div>
     </div>
