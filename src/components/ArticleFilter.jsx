@@ -1,22 +1,21 @@
 import { useEffect, useContext, useState } from 'react';
 import axios from 'axios';
 import ErrorContext from '../contexts/ErrorContext';
-import { useSearchParams } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 
 export default function ArticleFilter() {
   const { setError } = useContext(ErrorContext);
   const [topics, setTopics] = useState([]);
-  const [selectedTopic, setSelectedTopic] = useState('');
-  const [selectedSort, setSelectedSort] = useState('votes');
-  const [selectedOrder, setSelectedOrder] = useState('desc');
-  const { topic_slug } = useParams();
+  const [selection, setSelection] = useState({
+    topic: 'all',
+    sort_by: 'votes',
+    order_by: 'desc',
+  });
   const [isLoading, setIsLoading] = useState(true);
-  let [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
 
   useEffect(() => {
-    setSelectedTopic(topic_slug);
-
     axios
       .get(`https://northcoders-api-news.herokuapp.com/api/topics`)
       .then(({ data: { topics } }) => {
@@ -28,36 +27,35 @@ export default function ArticleFilter() {
       });
   }, []);
 
+  useEffect(() => {
+    const query = {};
+    query.sort_by = searchParams.get('sort_by') || 'votes';
+    query.order_by = searchParams.get('order_by') || 'desc';
+    query.topic = searchParams.get('topic') || 'all';
+
+    if (!location.search) {
+      query.topic = 'all';
+    }
+
+    setSelection(query);
+  }, [searchParams]);
+
   function handleQuerySelect(e, query) {
     e.preventDefault();
 
     const params = {
-      sort_by: selectedSort,
-      order_by: selectedOrder,
+      sort_by: selection.sort_by,
+      order_by: selection.order_by,
+      topic: selection.topic,
     };
 
-    if (query === 'topic' && e.target.value === 'all') {
-      setSearchParams(params);
-    } else {
-      setSearchParams({
-        ...params,
-        [query]: e.target.value,
-      });
-    }
-
-    if (query === 'topic') {
-      setSelectedTopic(e.target.value);
-      return;
-    }
-    if (query === 'sort_by') {
-      setSelectedSort(e.target.value);
-      return;
-    }
-    if (query === 'order_by') {
-      setSelectedOrder(e.target.value);
-      return;
-    }
+    setSearchParams({
+      ...params,
+      [query]: e.target.value,
+    });
   }
+
+  if (isLoading) return <></>;
 
   return (
     <div className="filter-container">
@@ -66,11 +64,11 @@ export default function ArticleFilter() {
           name="topics"
           id="topics"
           className="select-topics"
-          value={selectedTopic}
+          value={selection.topic || undefined}
           onChange={(e) => handleQuerySelect(e, 'topic')}
         >
           <option key="all" value="all">
-            all topics
+            All topics
           </option>
           {topics.map((topic) => {
             return (
@@ -86,7 +84,7 @@ export default function ArticleFilter() {
           name="sort"
           id="sort"
           className="select-sort"
-          value={selectedSort}
+          value={selection.sort_by}
           onChange={(e) => handleQuerySelect(e, 'sort_by')}
         >
           <option key="votes" value="votes">
@@ -102,14 +100,14 @@ export default function ArticleFilter() {
           name="order"
           id="order"
           className="select-order"
-          value={selectedOrder}
+          value={selection.order_by}
           onChange={(e) => handleQuerySelect(e, 'order_by')}
         >
           <option key="desc" value="desc">
-            {selectedSort === 'votes' ? 'High to low' : 'Most recent'}
+            {selection.sort_by === 'votes' ? 'High to low' : 'Most recent'}
           </option>
           <option key="asc" value="asc">
-            {selectedSort === 'votes' ? 'Low to high' : 'Oldest first '}
+            {selection.sort_by === 'votes' ? 'Low to high' : 'Oldest first '}
           </option>
         </select>
       </div>

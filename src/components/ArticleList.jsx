@@ -15,7 +15,12 @@ export default function ArticleList() {
     const params = {};
     params.sort_by = searchParams.get('sort_by') || 'votes';
     params.order_by = searchParams.get('order_by') || 'desc';
-    params.topic = searchParams.get('topic');
+
+    const searchTopic = searchParams.get('topic');
+
+    if (searchTopic && searchTopic !== 'all') {
+      params.topic = searchTopic;
+    }
 
     let request = `https://northcoders-api-news.herokuapp.com/api/articles`;
 
