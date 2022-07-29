@@ -133,3 +133,7 @@ a {
   justify-content: flex-start;
   text-align: left;
 }
+
+.container-error {
+  margin: 50px;
+}

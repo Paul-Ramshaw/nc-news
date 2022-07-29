@@ -1,16 +1,16 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
-import ErrorContext from '../contexts/ErrorContext';
 import { useParams } from 'react-router-dom';
 import { Card } from 'react-bootstrap';
 import formatDate from '../utils/formatDate';
 import UpVote from './UpVote';
 import Comments from './Comments';
+import Error from './Error';
 
 export default function Article() {
   const { article_id } = useParams();
   const [article, setArticle] = useState({});
-  const { setError } = useContext(ErrorContext);
+  const [articleError, setArticleError] = useState({ msg: '' });
   const [isLoading, setIsLoading] = useState(true);
   const [createdAt, setCreatedAt] = useState('');
 
@@ -26,12 +26,17 @@ export default function Article() {
         setIsLoading(false);
       })
       .catch((err) => {
-        setError(err.response.data);
+        setArticleError(err.response.data);
+        setIsLoading(false);
       });
   }, [article_id]);
 
   if (isLoading) {
     return <p>Loading...</p>;
+  }
+
+  if (articleError.msg) {
+    return <Error message={articleError.msg} />;
   }
 
   return (
