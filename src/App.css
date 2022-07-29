@@ -137,3 +137,12 @@ a {
 .container-error {
   margin: 50px;
 }
+
+.button-comment-delete {
+  margin: 10px;
+}
+
+.container-comment-button {
+  display: flex;
+  justify-content: flex-end;
+}
