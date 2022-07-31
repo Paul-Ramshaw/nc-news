@@ -8,7 +8,7 @@ Try out a deployed version of the app here: https://ncode-news.netlify.app. To t
 
 ## The API
 
-NC-news also makes use of the Northcoders news API. The Github repository for the API can be found here: https://github.com/Paul-Ramshaw/news.
+NC-news also makes use of the NC-news API. The Github repository for the API can be found here: https://github.com/Paul-Ramshaw/news.
 
 To try out a deployed version of the API a good place to start is: https://northcoders-api-news.herokuapp.com/api. Here you can find details for each available endpoint.
 
