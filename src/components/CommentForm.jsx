@@ -76,7 +76,7 @@ export default function CommentForm({ article_id, setComments }) {
               Comment
             </Button>
           ) : (
-            <Button variant="primary" type="submit" disabled>
+            <Button variant="primary" className="button" type="submit" disabled>
               Comment
             </Button>
           )}

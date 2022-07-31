@@ -35,6 +35,7 @@
 .article-card {
   display: flex;
   min-height: 25vh;
+  margin: 5px;
   margin-top: 1vh;
   margin-bottom: 2vh;
 }
@@ -145,4 +146,8 @@ a {
 .container-comment-button {
   display: flex;
   justify-content: flex-end;
+}
+
+.button {
+  margin: 10px;
 }

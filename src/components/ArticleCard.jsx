@@ -13,12 +13,9 @@ export default function ArticleCard({ article }) {
           <Card.Title>{article.title}</Card.Title>
           <Card.Subtitle className="topic-tag">{article.topic}</Card.Subtitle>
           <Card.Text>posted by {article.author}</Card.Text>
-          <Button variant="light">
-            {' '}
-            <FontAwesomeIcon className="icon" icon={faComment} />{' '}
-            {article.comment_count} comments
-          </Button>
-          <Link to={`/articles/${article.article_id}`}>
+          <FontAwesomeIcon className="icon" icon={faComment} />{' '}
+          {article.comment_count} comments
+          <Link to={`/articles/${article.article_id}`} className="button">
             <Button variant="light">Read article</Button>
           </Link>
         </div>
