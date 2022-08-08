@@ -77,6 +77,7 @@ select {
   padding: 3px;
   padding-right: 10px;
   border-radius: 3px;
+  font-size: 1.1rem !important;
 }
 
 .selector {
@@ -150,4 +151,18 @@ a {
 
 .button {
   margin: 10px;
+}
+
+.container-comment-form {
+  margin: 7px;
+}
+
+.loading-message {
+  margin-top: 20vh;
+}
+
+@media only screen and (min-width: 600px) {
+  select {
+    font-size: 1rem !important;
+  }
 }
