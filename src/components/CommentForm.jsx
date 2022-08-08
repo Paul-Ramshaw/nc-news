@@ -59,7 +59,7 @@ export default function CommentForm({ article_id, setComments }) {
   }
 
   return (
-    <div>
+    <div className="container-comment-form">
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Control
@@ -72,7 +72,7 @@ export default function CommentForm({ article_id, setComments }) {
         </Form.Group>
         <div className="container-comment-button">
           {currentComment.trim().length > 0 ? (
-            <Button variant="primary" type="submit">
+            <Button variant="primary" className="button" type="submit">
               Comment
             </Button>
           ) : (
