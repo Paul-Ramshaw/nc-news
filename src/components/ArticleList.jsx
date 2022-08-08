@@ -38,7 +38,7 @@ export default function ArticleList() {
   }, [searchParams]);
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <p className="loading-message">Loading...</p>;
   }
 
   if (articleListError.msg) {
