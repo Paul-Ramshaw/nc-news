@@ -1,4 +1,4 @@
-# NC news API
+# NC news
 
 ## Project Summary
 
