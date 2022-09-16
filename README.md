@@ -2,7 +2,7 @@
 
 ## Project Summary
 
-NC-news is a social news aggregation, web content rating, and discussion website. The application has articles which are divided into topics. Each article has user curated ratings and can be voted on using the API. The app also allows users to discuss articles by adding comments in the discussion thread associated with each article.
+NC-news is a social news aggregation, web content rating, and discussion website built with React and React-bootstrap. The application has articles which are divided into topics. Each article has user curated ratings and can be voted on using the API. The app also allows users to discuss articles by adding comments in the discussion thread associated with each article.
 
 Try out a deployed version of the app here: https://ncode-news.netlify.app. To try the app locally follow the 'Getting started' instructions below.
 
